@@ -1,0 +1,5 @@
+#
+# chroot to debien etch for deployable linux builds that run everywhere
+#
+#
+schroot -c etch -u mike

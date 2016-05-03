@@ -1,0 +1,45 @@
+
+TARGET	= weaved_dns 
+
+all: $(TARGET)
+
+# Which compiler
+CC = gcc
+
+# Where are include files kept
+INCLUDE =
+
+# Use this for Linux client software
+CDEFINE = -DLINUX -DI386 -D_GNU_SOURCE -DLOGGING -DBACKTRACE_SYMBOLS
+
+
+# Options for development
+CFLAGS		= $(INCLUDE) $(CDEFINE) -g -Wall -Os 
+LDFLAGS		= 
+LINKFLAGS	= -o 
+
+LIBS            = 
+LIBS_INC        = 
+
+# Options for release
+# CFLAGS = -O -Wall -ansi
+
+#Dependancies for all
+DEPENDALL	= config.h mytypes.h debug.h net.h log.h webio.h file_config.h
+DEPENDAPP  += yhash.h weaved_dns_server.h dns.h zones.h dns_names.h  
+
+#Objects
+OBJ	 = dns_server.c dns.c dns_names.c zones.c control.c daemonize.c yselect.c 
+OBJ +=file_config.c arch.c log.c net.c webio.c yhash.c
+
+$(TARGET): $(OBJ) 
+	$(CC) $(CFLAGS) $(LINKFLAGS) $(TARGET) $(OBJ) $(LIBS)
+	cp $(TARGET) ../bin/$(TARGET)
+	cp $(TARGET) /home/htdocs/weaved_dns
+
+clean:
+	-rm *.o $(MYLIB)
+	 rm -f *.map
+	 rm -f $(TARGET)
+
+
